@@ -11,11 +11,11 @@
  * jsencrypt 是一个纯 JavaScript 实现的 RSA 加密库
  * 支持公钥加密、私钥解密
  */
-import JSEncrypt from 'jsencrypt'
+import JSEncrypt from "jsencrypt";
 
 // RSA 公钥（用于加密）
 const PUBLIC_KEY = `MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoR8mX0rGKLqzcWmOzbfj64K8ZIgOdH
-nzkXSOVOZbFu/TJhZ7rFAN+eaGkl3C4buccQd/EjEsj9ir7ijT7h96MCAwEAAQ==`
+nzkXSOVOZbFu/TJhZ7rFAN+eaGkl3C4buccQd/EjEsj9ir7ijT7h96MCAwEAAQ==`;
 
 // RSA 私钥（用于解密，记住密码功能使用）
 const PRIVATE_KEY = `MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAqhHyZfSsYourNxaY
@@ -25,7 +25,7 @@ kM0HqoTt2UZwA5E2MzS4EI2gjfQhz5X28uqxAiEA3wNFxfrCZlSZHb0gn2zDpWow
 cSxQAgiCstxGUoOqlW8CIQDDOerGKH5OmCJ4Z21v+F25WaHYPxCFMvwxpcw99Ecv
 DQIgIdhDTIqD2jfYjPTY8Jj3EDGPbH2HHuffvflECt3Ek60CIQCFRlCkHpi7hthh
 YhovyloRYsM+IS9h/0BzlEAuO0ktMQIgSPT3aFAgJYwKpqRYKlLDVcflZFCKY7u3
-UP8iWi1Qw0Y=`
+UP8iWi1Qw0Y=`;
 
 /**
  * RSA 加密
@@ -36,9 +36,9 @@ UP8iWi1Qw0Y=`
  * 登录时对密码进行加密后再发送给后端
  */
 export function encrypt(text) {
-  const encryptor = new JSEncrypt()
-  encryptor.setPublicKey(PUBLIC_KEY)
-  return encryptor.encrypt(text)
+  const encryptor = new JSEncrypt();
+  encryptor.setPublicKey(PUBLIC_KEY);
+  return encryptor.encrypt(text);
 }
 
 /**
@@ -50,7 +50,7 @@ export function encrypt(text) {
  * 记住密码功能：从本地存储读取加密的密码后进行解密
  */
 export function decrypt(text) {
-  const decryptor = new JSEncrypt()
-  decryptor.setPrivateKey(PRIVATE_KEY)
-  return decryptor.decrypt(text)
+  const decryptor = new JSEncrypt();
+  decryptor.setPrivateKey(PRIVATE_KEY);
+  return decryptor.decrypt(text);
 }

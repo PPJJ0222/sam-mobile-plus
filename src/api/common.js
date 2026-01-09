@@ -8,8 +8,8 @@ import request from "./request";
 
 /** 获取工艺字典 */
 export function getCraftList() {
-    return request({
-        url: '/moldStandardCraft/moldStandardCraftController/getCraftList',
-        method: 'get'
-    })
+  return request({
+    url: "/moldStandardCraft/moldStandardCraftController/getCraftList",
+    method: "get",
+  });
 }

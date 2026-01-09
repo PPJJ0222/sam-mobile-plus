@@ -23,97 +23,44 @@
   <div class="auxiliary-form">
     <van-form @submit="onSubmit" ref="formRef">
       <!-- 工时归属 -->
-      <van-field
-        :model-value="formatDateTime(formData.actDateTime)"
-        is-link
-        readonly
-        required
-        label="工时归属"
-        placeholder="请选择工时归属时间"
-        @click="showActDateTimePicker = true"
-        :rules="[{ required: true, message: '请选择工时归属时间' }]"
-      />
+      <van-field :model-value="formatDateTime(formData.actDateTime)" is-link readonly required label="工时归属"
+        placeholder="请选择工时归属时间" @click="showActDateTimePicker = true"
+        :rules="[{ required: true, message: '请选择工时归属时间' }]" />
 
       <!-- 开始时间 -->
-      <van-field
-        :model-value="formatDateTime(formData.actBeginTime)"
-        is-link
-        readonly
-        required
-        label="开始时间"
-        placeholder="请选择开始时间"
-        @click="showBeginTimePicker = true"
-        :rules="[{ required: true, message: '请选择开始时间' }]"
-      />
+      <van-field :model-value="formatDateTime(formData.actBeginTime)" is-link readonly required label="开始时间"
+        placeholder="请选择开始时间" @click="showBeginTimePicker = true" :rules="[{ required: true, message: '请选择开始时间' }]" />
 
       <!-- 结束时间 -->
-      <van-field
-        :model-value="formatDateTime(formData.actEndTime)"
-        is-link
-        readonly
-        required
-        label="结束时间"
-        placeholder="请选择结束时间"
-        @click="showEndTimePicker = true"
-        :rules="[{ required: true, message: '请选择结束时间' }]"
-      />
+      <van-field :model-value="formatDateTime(formData.actEndTime)" is-link readonly required label="结束时间"
+        placeholder="请选择结束时间" @click="showEndTimePicker = true" :rules="[{ required: true, message: '请选择结束时间' }]" />
 
       <!-- 人员工时（只读，自动计算） -->
-      <van-field
-        v-model="formData.actManTime"
-        readonly
-        required
-        label="人员工时"
-        placeholder="由开始/结束时间自动计算"
-        :rules="[{ required: true, message: '请先选择开始和结束时间' }]"
-      >
+      <van-field v-model="formData.actManTime" readonly required label="人员工时" placeholder="由开始/结束时间自动计算"
+        :rules="[{ required: true, message: '请先选择开始和结束时间' }]">
         <template #extra>
           <span class="unit">分钟</span>
         </template>
       </van-field>
 
       <!-- 设备工时（只读，选择设备后填入） -->
-      <van-field
-        v-model="formData.actMacTime"
-        readonly
-        label="设备工时"
-        placeholder="选择加工设备后自动填入"
-      >
+      <van-field v-model="formData.actMacTime" readonly label="设备工时" placeholder="选择加工设备后自动填入">
         <template #extra>
           <span class="unit">分钟</span>
         </template>
       </van-field>
 
       <!-- 工艺选择 -->
-      <van-field
-        v-model="formData.craftName"
-        is-link
-        readonly
-        label="工艺"
-        placeholder="请选择工艺"
-        @click="showCraftPicker = true"
-      />
+      <van-field v-model="formData.craftName" is-link readonly label="工艺" placeholder="请选择工艺"
+        @click="showCraftPicker = true" />
 
       <!-- 加工设备选择 -->
-      <van-field
-        v-model="formData.actByMacText"
-        is-link
-        readonly
-        label="加工设备"
-        placeholder="请选择加工设备"
-        @click="showDevicePicker = true"
-      />
+      <van-field v-model="formData.actByMacText" is-link readonly label="加工设备" placeholder="请选择加工设备"
+        @click="showDevicePicker = true" />
 
       <!-- 反馈说明 -->
-      <van-field
-        v-model="formData.prdRemark"
-        type="textarea"
-        label="反馈说明"
-        placeholder="请输入反馈说明（最多500字）"
-        maxlength="500"
-        show-word-limit
-        rows="3"
-      />
+      <van-field v-model="formData.prdRemark" type="textarea" label="反馈说明" placeholder="请输入反馈说明（最多500字）" maxlength="500"
+        show-word-limit rows="3" />
 
       <!-- 提交和重置按钮 -->
       <div class="button-group">
@@ -128,85 +75,47 @@
 
     <!-- 工时归属时间选择器（步骤式：先选日期，点下一步选时间） -->
     <van-popup v-model:show="showActDateTimePicker" position="bottom">
-      <van-picker-group
-        title="选择工时归属时间"
-        :tabs="['选择日期', '选择时间']"
-        next-step-text="下一步"
-        @confirm="onActDateTimeConfirm"
-        @cancel="showActDateTimePicker = false"
-      >
+      <van-picker-group title="选择工时归属时间" :tabs="['选择日期', '选择时间']" next-step-text="下一步" @confirm="onActDateTimeConfirm"
+        @cancel="showActDateTimePicker = false">
         <van-date-picker v-model="actDatePickerValue" :min-date="minDate" :max-date="maxDate" />
-        <van-time-picker
-          v-model="actTimePickerValue"
-          :columns-type="['hour', 'minute']"
-          :min-hour="actTimeHourFilter.minHour"
-          :max-hour="actTimeHourFilter.maxHour"
-          :min-time="actTimeLimit.minTime"
-          :max-time="actTimeLimit.maxTime"
-        />
+        <van-time-picker v-model="actTimePickerValue" :columns-type="['hour', 'minute']"
+          :min-hour="actTimeHourFilter.minHour" :max-hour="actTimeHourFilter.maxHour" :min-time="actTimeLimit.minTime"
+          :max-time="actTimeLimit.maxTime" />
       </van-picker-group>
     </van-popup>
 
     <!-- 开始时间选择器（步骤式：先选日期，点下一步选时间） -->
     <van-popup v-model:show="showBeginTimePicker" position="bottom">
-      <van-picker-group
-        title="选择开始时间"
-        :tabs="['选择日期', '选择时间']"
-        next-step-text="下一步"
-        @confirm="onBeginTimeConfirm"
-        @cancel="showBeginTimePicker = false"
-      >
+      <van-picker-group title="选择开始时间" :tabs="['选择日期', '选择时间']" next-step-text="下一步" @confirm="onBeginTimeConfirm"
+        @cancel="showBeginTimePicker = false">
         <van-date-picker v-model="beginDatePickerValue" :min-date="minDate" :max-date="maxDate" />
-        <van-time-picker
-          v-model="beginTimePickerValue"
-          :columns-type="['hour', 'minute']"
-          :min-hour="beginTimeHourFilter.minHour"
-          :max-hour="beginTimeHourFilter.maxHour"
-          :min-time="beginTimeLimit.minTime"
-          :max-time="beginTimeLimit.maxTime"
-        />
+        <van-time-picker v-model="beginTimePickerValue" :columns-type="['hour', 'minute']"
+          :min-hour="beginTimeHourFilter.minHour" :max-hour="beginTimeHourFilter.maxHour"
+          :min-time="beginTimeLimit.minTime" :max-time="beginTimeLimit.maxTime" />
       </van-picker-group>
     </van-popup>
 
     <!-- 结束时间选择器（步骤式：先选日期，点下一步选时间） -->
     <van-popup v-model:show="showEndTimePicker" position="bottom">
-      <van-picker-group
-        title="选择结束时间"
-        :tabs="['选择日期', '选择时间']"
-        next-step-text="下一步"
-        @confirm="onEndTimeConfirm"
-        @cancel="showEndTimePicker = false"
-      >
+      <van-picker-group title="选择结束时间" :tabs="['选择日期', '选择时间']" next-step-text="下一步" @confirm="onEndTimeConfirm"
+        @cancel="showEndTimePicker = false">
         <van-date-picker v-model="endDatePickerValue" :min-date="minDate" :max-date="maxDate" />
-        <van-time-picker
-          v-model="endTimePickerValue"
-          :columns-type="['hour', 'minute']"
-          :min-hour="endTimeHourFilter.minHour"
-          :max-hour="endTimeHourFilter.maxHour"
-          :min-time="endTimeLimit.minTime"
-          :max-time="endTimeLimit.maxTime"
-        />
+        <van-time-picker v-model="endTimePickerValue" :columns-type="['hour', 'minute']"
+          :min-hour="endTimeHourFilter.minHour" :max-hour="endTimeHourFilter.maxHour" :min-time="endTimeLimit.minTime"
+          :max-time="endTimeLimit.maxTime" />
       </van-picker-group>
     </van-popup>
 
     <!-- 工艺选择器 -->
     <van-popup v-model:show="showCraftPicker" position="bottom">
-      <van-picker
-        :columns="craftOptions"
-        @confirm="onCraftConfirm"
-        @cancel="showCraftPicker = false"
-        :columns-field-names="{ text: 'text', value: 'value' }"
-      />
+      <van-picker :columns="craftOptions" @confirm="onCraftConfirm" @cancel="showCraftPicker = false"
+        :columns-field-names="{ text: 'text', value: 'value' }" />
     </van-popup>
 
     <!-- 加工设备选择器 -->
     <van-popup v-model:show="showDevicePicker" position="bottom">
-      <van-picker
-        :columns="deviceOptions"
-        @confirm="onDeviceConfirm"
-        @cancel="showDevicePicker = false"
-        :columns-field-names="{ text: 'text', value: 'value' }"
-      />
+      <van-picker :columns="deviceOptions" @confirm="onDeviceConfirm" @cancel="showDevicePicker = false"
+        :columns-field-names="{ text: 'text', value: 'value' }" />
     </van-popup>
   </div>
 </template>

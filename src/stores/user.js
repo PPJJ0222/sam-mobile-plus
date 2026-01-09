@@ -11,9 +11,9 @@
  * - actions: 修改数据的方法（可以是异步的）
  * - getters: 计算属性（基于 state 派生的数据）
  */
-import { defineStore } from 'pinia'
-import { loginMobile, getInfo, logout } from '@/api/auth'
-import { getToken, setToken, removeToken, clearAll } from '@/utils/storage'
+import { defineStore } from "pinia";
+import { loginMobile, getInfo, logout } from "@/api/auth";
+import { getToken, setToken, removeToken, clearAll } from "@/utils/storage";
 
 /**
  * 用户 Store
@@ -23,20 +23,20 @@ import { getToken, setToken, removeToken, clearAll } from '@/utils/storage'
  * const userStore = useUserStore()
  * userStore.login(username, password)
  */
-export const useUserStore = defineStore('user', {
+export const useUserStore = defineStore("user", {
   /**
    * state: 存储的数据
    * 【说明】token 初始值从 localStorage 读取，实现页面刷新后保持登录状态
    */
   state: () => ({
     // 用户 token，用于接口认证
-    token: getToken() || '',
+    token: getToken() || "",
     // 用户基本信息
     userInfo: null,
     // 用户角色列表
     roles: [],
     // 用户权限列表
-    permissions: []
+    permissions: [],
   }),
 
   /**
@@ -44,7 +44,7 @@ export const useUserStore = defineStore('user', {
    */
   getters: {
     // 是否已登录（有 token 即视为已登录）
-    isLoggedIn: (state) => !!state.token
+    isLoggedIn: (state) => !!state.token,
   },
 
   /**
@@ -62,13 +62,13 @@ export const useUserStore = defineStore('user', {
      * 2. 保存 token 到 state 和 localStorage
      */
     async login(username, encryptedPassword) {
-      const res = await loginMobile(username, encryptedPassword)
+      const res = await loginMobile(username, encryptedPassword);
       // 调试：打印后端返回的数据结构
-      console.log('登录接口返回数据:', res)
+      console.log("登录接口返回数据:", res);
       // 保存 token
-      this.token = res.token
-      setToken(res.token)
-      return res
+      this.token = res.token;
+      setToken(res.token);
+      return res;
     },
 
     /**
@@ -80,14 +80,15 @@ export const useUserStore = defineStore('user', {
      * 2. 保存用户信息、角色、权限到 state
      */
     async fetchUserInfo() {
-      const res = await getInfo()
+      const res = await getInfo();
       // 保存用户信息
-      this.userInfo = res.user
+      this.userInfo = res.user;
       // 保存角色（如果没有角色，给一个默认角色）
-      this.roles = res.roles && res.roles.length > 0 ? res.roles : ['ROLE_DEFAULT']
+      this.roles =
+        res.roles && res.roles.length > 0 ? res.roles : ["ROLE_DEFAULT"];
       // 保存权限
-      this.permissions = res.permissions || []
-      return res
+      this.permissions = res.permissions || [];
+      return res;
     },
 
     /**
@@ -101,10 +102,10 @@ export const useUserStore = defineStore('user', {
      */
     async logoutAction() {
       try {
-        await logout()
+        await logout();
       } finally {
         // 无论接口是否成功，都清空本地数据
-        this.resetState()
+        this.resetState();
       }
     },
 
@@ -113,11 +114,11 @@ export const useUserStore = defineStore('user', {
      * 【使用场景】退出登录、token 过期时调用
      */
     resetState() {
-      this.token = ''
-      this.userInfo = null
-      this.roles = []
-      this.permissions = []
-      clearAll()
-    }
-  }
-})
+      this.token = "";
+      this.userInfo = null;
+      this.roles = [];
+      this.permissions = [];
+      clearAll();
+    },
+  },
+});

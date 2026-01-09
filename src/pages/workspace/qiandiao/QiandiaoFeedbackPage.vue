@@ -12,11 +12,11 @@
   4. 展开详情：点击数据项展开详情表单进行反馈
 -->
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
-import {showConfirmDialog, showToast} from "vant";
-import {getDeviceList, getOrderList, getPartNoList, getQiandiaoDetail, getQianTiaoUserInfo, getSamMouldInfoByProAndBz, submitQiandiaoFeedback,} from "@/api/qiandiao";
-import {getCraftList} from "@/api/common";
-import {calculateActManTime} from "@/pages/workspace/otherWorktime/utils";
+import { computed, onMounted, ref, watch } from "vue";
+import { showConfirmDialog, showToast } from "vant";
+import { getDeviceList, getOrderList, getPartNoList, getQiandiaoDetail, getQianTiaoUserInfo, getSamMouldInfoByProAndBz, submitQiandiaoFeedback, } from "@/api/qiandiao";
+import { getCraftList } from "@/api/common";
+import { calculateActManTime } from "@/pages/workspace/otherWorktime/utils";
 
 // ==================== 用户信息 ====================
 
@@ -41,7 +41,7 @@ const userInfo = ref({
  * 计算属性，当 userInfo 变化时自动重新计算显示文本
  */
 const userInfoDisplay = computed(() => {
-  const {deptName, plineName, nickName} = userInfo.value;
+  const { deptName, plineName, nickName } = userInfo.value;
   if (!deptName && !plineName && !nickName) {
     return "加载中...";
   }
@@ -160,8 +160,8 @@ const filteredPartNoOptions = computed(() => {
   const keyword = partNoKeyword.value.trim();
   if (!keyword) return partNoOptions.value;
   return partNoOptions.value.filter(
-      (item) =>
-          item.text.includes(keyword) || String(item.value).includes(keyword)
+    (item) =>
+      item.text.includes(keyword) || String(item.value).includes(keyword)
   );
 });
 
@@ -331,9 +331,9 @@ const getTimeLimit = (selectedDateArr) => {
     return { minTime: undefined, maxTime: undefined };
   }
   const selectedDate = new Date(
-      Number(selectedDateArr[0]),
-      Number(selectedDateArr[1]) - 1,
-      Number(selectedDateArr[2])
+    Number(selectedDateArr[0]),
+    Number(selectedDateArr[1]) - 1,
+    Number(selectedDateArr[2])
   );
   const min = minDate.value;
   const max = maxDate.value;
@@ -362,8 +362,8 @@ const filteredDeviceOptions = computed(() => {
   const keyword = deviceKeyword.value.trim();
   if (!keyword) return deviceOptions.value;
   return deviceOptions.value.filter(
-      (item) =>
-          item.text.includes(keyword) || String(item.value).includes(keyword)
+    (item) =>
+      item.text.includes(keyword) || String(item.value).includes(keyword)
   );
 });
 
@@ -395,7 +395,7 @@ const formatDateTime = (date) => {
  * 使用 calculateActManTime 函数计算人员工时（自动扣除休息时间）
  */
 const calculateHours = () => {
-  const {actBeginTime, actEndTime, actByMac} = detailForm.value;
+  const { actBeginTime, actEndTime, actByMac } = detailForm.value;
   if (actBeginTime && actEndTime) {
     // 使用 calculateActManTime 计算工时（扣除午休、晚休、晚班休息时间）
     const minutes = calculateActManTime(actBeginTime, actEndTime);
@@ -412,24 +412,24 @@ const calculateHours = () => {
  * 监听开始时间和结束时间变化，自动计算工时
  */
 watch(
-    [() => detailForm.value.actBeginTime, () => detailForm.value.actEndTime],
-    () => {
-      calculateHours();
-    }
+  [() => detailForm.value.actBeginTime, () => detailForm.value.actEndTime],
+  () => {
+    calculateHours();
+  }
 );
 
 /**
  * 监听设备选择变化，更新设备工时
  */
 watch(
-    () => detailForm.value.actByMac,
-    (newVal) => {
-      if (newVal) {
-        detailForm.value.actMacTime = detailForm.value.actManTime;
-      } else {
-        detailForm.value.actMacTime = "";
-      }
+  () => detailForm.value.actByMac,
+  (newVal) => {
+    if (newVal) {
+      detailForm.value.actMacTime = detailForm.value.actManTime;
+    } else {
+      detailForm.value.actMacTime = "";
     }
+  }
 );
 
 // ==================== 时间选择器事件 ====================
@@ -442,11 +442,11 @@ const arrayToDate = (dateArr, timeArr) => {
     return null;
   }
   return new Date(
-      Number(dateArr[0]),
-      Number(dateArr[1]) - 1,
-      Number(dateArr[2]),
-      Number(timeArr[0]),
-      Number(timeArr[1])
+    Number(dateArr[0]),
+    Number(dateArr[1]) - 1,
+    Number(dateArr[2]),
+    Number(timeArr[0]),
+    Number(timeArr[1])
   );
 };
 
@@ -471,7 +471,7 @@ const dateToArrays = (date) => {
  * 打开工时归属时间选择器
  */
 const openWorkTimePicker = () => {
-  const {dateArr, timeArr} = dateToArrays(detailForm.value.actDateTime);
+  const { dateArr, timeArr } = dateToArrays(detailForm.value.actDateTime);
   tempWorkTimeDate.value = dateArr;
   tempWorkTimeTime.value = timeArr;
   showWorkTimePicker.value = true;
@@ -489,7 +489,7 @@ const onWorkTimeConfirm = () => {
  * 打开开始时间选择器
  */
 const openStartTimePicker = () => {
-  const {dateArr, timeArr} = dateToArrays(detailForm.value.actBeginTime);
+  const { dateArr, timeArr } = dateToArrays(detailForm.value.actBeginTime);
   tempStartDate.value = dateArr;
   tempStartTime.value = timeArr;
   showStartTimePicker.value = true;
@@ -515,7 +515,7 @@ const clearStartTime = () => {
  * 打开结束时间选择器
  */
 const openEndTimePicker = () => {
-  const {dateArr, timeArr} = dateToArrays(detailForm.value.actEndTime);
+  const { dateArr, timeArr } = dateToArrays(detailForm.value.actEndTime);
   tempEndDate.value = dateArr;
   tempEndTime.value = timeArr;
   showEndTimePicker.value = true;
@@ -540,7 +540,7 @@ const clearEndTime = () => {
 /**
  * 确认设备选择
  */
-const onDeviceConfirm = ({selectedOptions}) => {
+const onDeviceConfirm = ({ selectedOptions }) => {
   const selected = selectedOptions[0];
   detailForm.value.actByMac = selected.value;
   detailForm.value.actByMacText = selected.text;
@@ -581,14 +581,14 @@ watch(moldId, async (newMoldId) => {
 
 // ==================== 选择器确认事件 ====================
 
-const onMoldConfirm = ({selectedOptions}) => {
+const onMoldConfirm = ({ selectedOptions }) => {
   const selected = selectedOptions[0];
   moldId.value = selected.value;
   moldText.value = selected.text;
   showMoldPicker.value = false;
 };
 
-const onPartNoConfirm = ({selectedOptions}) => {
+const onPartNoConfirm = ({ selectedOptions }) => {
   const selected = selectedOptions[0];
   partNo.value = selected.value;
   partNoText.value = selected.text;
@@ -702,7 +702,7 @@ const handleItemClick = async (item) => {
   try {
     const res = await getQiandiaoDetail(item.id);
     // 保存详情数据，直接使用后端返回的数据
-    detailData.value = {...res, id: item.id, _listItem: item};
+    detailData.value = { ...res, id: item.id, _listItem: item };
 
     // 初始化详情表单数据
     // 填充只读字段（直接使用后端字段名）
@@ -829,14 +829,14 @@ const handleSubmit = async () => {
       <van-cell-group inset class="form-card">
         <!-- 模具（必填，本地筛选） -->
         <van-field v-model="moldText" label="模具" placeholder="请选择模具" is-link readonly required
-                   @click="showMoldPicker = true"/>
+          @click="showMoldPicker = true" />
 
         <!-- 件号（非必填，联动模具） -->
         <van-field v-model="partNoText" label="件号" placeholder="请选择件号" is-link readonly
-                   @click="showPartNoPicker = true"/>
+          @click="showPartNoPicker = true" />
 
         <!-- 制造令号（非必填） -->
-        <van-field v-model="manufactureNo" label="制造令号" placeholder="请输入制造令号"/>
+        <van-field v-model="manufactureNo" label="制造令号" placeholder="请输入制造令号" />
 
         <!-- 是否调班（单选） -->
         <van-field label="是否调班">
@@ -864,7 +864,7 @@ const handleSubmit = async () => {
     -->
     <div class="list-area">
       <!-- 查询加载中状态 -->
-      <van-loading v-if="listLoading" class="list-loading"/>
+      <van-loading v-if="listLoading" class="list-loading" />
 
       <!--
         【列表项结构】
@@ -873,10 +873,10 @@ const handleSubmit = async () => {
       <div v-else v-for="item in listData" :key="item.id" class="list-item-wrapper">
         <!-- 数据卡片（直接使用后端返回的字段名） -->
         <van-cell-group inset class="data-card" @click="handleItemClick(item)">
-          <van-cell title="件号" :value="item.importPartCode"/>
-          <van-cell title="零件名称" :value="item.partName"/>
-          <van-cell title="工艺名称" :value="getCraftName(item.partRoutingId)"/>
-          <van-cell title="工单号" :value="item.orderNumber"/>
+          <van-cell title="件号" :value="item.importPartCode" />
+          <van-cell title="零件名称" :value="item.partName" />
+          <van-cell title="工艺名称" :value="getCraftName(item.partRoutingId)" />
+          <van-cell title="工单号" :value="item.orderNumber" />
         </van-cell-group>
       </div>
 
@@ -884,7 +884,7 @@ const handleSubmit = async () => {
         【空状态】
         当列表为空且不在加载中时显示
       -->
-      <van-empty v-if="!listLoading && totalCount === 0" description="暂无数据，请先查询"/>
+      <van-empty v-if="!listLoading && totalCount === 0" description="暂无数据，请先查询" />
 
       <!--
         【分页组件】
@@ -892,7 +892,7 @@ const handleSubmit = async () => {
       -->
       <div v-if="totalPages > 1" class="pagination-wrapper">
         <van-pagination v-model="pageNum" :total-items="totalCount" :items-per-page="pageSize" :show-page-size="3"
-                        force-ellipses @change="handlePageChange"/>
+          force-ellipses @change="handlePageChange" />
       </div>
     </div>
 
@@ -911,31 +911,31 @@ const handleSubmit = async () => {
         <div class="detail-popup-title">反馈详情</div>
 
         <!-- 加载中状态 -->
-        <van-loading v-if="detailLoading" class="detail-loading"/>
+        <van-loading v-if="detailLoading" class="detail-loading" />
 
         <!-- 详情表单 -->
         <van-cell-group v-else-if="detailData" inset class="detail-form">
           <!-- 只读字段（字段名与后端一致） -->
-          <van-field v-model="detailForm.moldCode" label="模具号" readonly/>
-          <van-field v-model="detailForm.partCode" label="零件号" readonly/>
-          <van-field v-model="detailForm.projectCode" label="项目号" readonly/>
+          <van-field v-model="detailForm.moldCode" label="模具号" readonly />
+          <van-field v-model="detailForm.partCode" label="零件号" readonly />
+          <van-field v-model="detailForm.projectCode" label="项目号" readonly />
           <!-- 数据卡片字段（从列表项填充） -->
-          <van-field v-model="detailForm.importPartCode" label="件号" readonly/>
-          <van-field v-model="detailForm.partName" label="零件名称" readonly/>
-          <van-field :model-value="getCraftName(detailForm.partRoutingId)" label="工艺名称" readonly/>
-          <van-field v-model="detailForm.orderNumber" label="工单号" readonly/>
+          <van-field v-model="detailForm.importPartCode" label="件号" readonly />
+          <van-field v-model="detailForm.partName" label="零件名称" readonly />
+          <van-field :model-value="getCraftName(detailForm.partRoutingId)" label="工艺名称" readonly />
+          <van-field v-model="detailForm.orderNumber" label="工单号" readonly />
 
           <!-- 工时归属时间（必填，不可清空） -->
           <van-field :model-value="formatDateTime(detailForm.actDateTime)" label="工时归属" placeholder="请选择" is-link
-                     readonly required @click="openWorkTimePicker"/>
+            readonly required @click="openWorkTimePicker" />
 
           <!-- 开始时间（必填，允许清空） -->
           <van-field :model-value="formatDateTime(detailForm.actBeginTime)" label="开始时间" placeholder="请选择" is-link
-                     readonly required @click="openStartTimePicker"/>
+            readonly required @click="openStartTimePicker" />
 
           <!-- 结束时间（必填，允许清空） -->
           <van-field :model-value="formatDateTime(detailForm.actEndTime)" label="结束时间" placeholder="请选择" is-link
-                     readonly required @click="openEndTimePicker"/>
+            readonly required @click="openEndTimePicker" />
 
           <!-- 人员工时（只读，自动计算） -->
           <van-field v-model="detailForm.actManTime" label="人员工时" readonly required>
@@ -953,21 +953,21 @@ const handleSubmit = async () => {
 
           <!-- 加工设备（非必填，可筛选） -->
           <van-field v-model="detailForm.actByMacText" label="加工设备" placeholder="请选择" is-link readonly
-                     @click="showDevicePicker = true"/>
+            @click="showDevicePicker = true" />
 
           <!-- 反馈说明（非必填，500字以内） -->
           <van-field v-model="detailForm.prdRemark" label="反馈说明" type="textarea" placeholder="请输入反馈说明（500字以内）"
-                     maxlength="500" show-word-limit rows="3" autosize/>
+            maxlength="500" show-word-limit rows="3" autosize />
 
           <!-- 操作按钮 -->
           <div class="button-group">
             <van-button type="primary" @click="handleSubmit" class="submit-btn">
               提交反馈
             </van-button>
-                        <van-button type="default" @click="handleDetailReset" class="reset-btn">
+            <van-button type="default" @click="handleDetailReset" class="reset-btn">
               重置
             </van-button>
-                        <van-button type="default" @click="showDetailPopup = false" class="cancel-btn">
+            <van-button type="default" @click="showDetailPopup = false" class="cancel-btn">
               取消
             </van-button>
           </div>
@@ -980,17 +980,17 @@ const handleSubmit = async () => {
     <!-- 模具选择器（本地筛选） -->
     <van-popup v-model:show="showMoldPicker" position="bottom" round>
       <div class="picker-search">
-        <van-search v-model="moldKeyword" placeholder="输入模具关键词" shape="round" clearable/>
+        <van-search v-model="moldKeyword" placeholder="输入模具关键词" shape="round" clearable />
       </div>
-      <van-picker :columns="filteredMoldOptions" @confirm="onMoldConfirm" @cancel="showMoldPicker = false"/>
+      <van-picker :columns="filteredMoldOptions" @confirm="onMoldConfirm" @cancel="showMoldPicker = false" />
     </van-popup>
 
     <!-- 件号选择器 -->
     <van-popup v-model:show="showPartNoPicker" position="bottom" round>
       <div class="picker-search">
-        <van-search v-model="partNoKeyword" placeholder="输入件号关键词" shape="round" clearable/>
+        <van-search v-model="partNoKeyword" placeholder="输入件号关键词" shape="round" clearable />
       </div>
-      <van-picker :columns="filteredPartNoOptions" @confirm="onPartNoConfirm" @cancel="showPartNoPicker = false"/>
+      <van-picker :columns="filteredPartNoOptions" @confirm="onPartNoConfirm" @cancel="showPartNoPicker = false" />
       <div class="picker-clear-btn">
         <van-button size="small" @click="clearPartNo">清空</van-button>
       </div>
@@ -1001,22 +1001,22 @@ const handleSubmit = async () => {
     <!-- 工时归属时间选择器（步骤式：先选日期，点下一步选时间） -->
     <van-popup v-model:show="showWorkTimePicker" position="bottom" round>
       <van-picker-group title="选择工时归属时间" :tabs="dateTimeTabs" next-step-text="下一步" @confirm="onWorkTimeConfirm"
-                        @cancel="showWorkTimePicker = false">
-        <van-date-picker v-model="tempWorkTimeDate" :min-date="minDate" :max-date="maxDate"/>
+        @cancel="showWorkTimePicker = false">
+        <van-date-picker v-model="tempWorkTimeDate" :min-date="minDate" :max-date="maxDate" />
         <van-time-picker v-model="tempWorkTimeTime" :columns-type="['hour', 'minute']"
-                         :min-hour="workTimeHourFilter.minHour" :max-hour="workTimeHourFilter.maxHour"
-                         :min-time="workTimeLimit.minTime" :max-time="workTimeLimit.maxTime"/>
+          :min-hour="workTimeHourFilter.minHour" :max-hour="workTimeHourFilter.maxHour"
+          :min-time="workTimeLimit.minTime" :max-time="workTimeLimit.maxTime" />
       </van-picker-group>
     </van-popup>
 
     <!-- 开始时间选择器（步骤式：先选日期，点下一步选时间） -->
     <van-popup v-model:show="showStartTimePicker" position="bottom" round>
       <van-picker-group title="选择开始时间" :tabs="dateTimeTabs" next-step-text="下一步" @confirm="onStartTimeConfirm"
-                        @cancel="showStartTimePicker = false">
-        <van-date-picker v-model="tempStartDate" :min-date="minDate" :max-date="maxDate"/>
+        @cancel="showStartTimePicker = false">
+        <van-date-picker v-model="tempStartDate" :min-date="minDate" :max-date="maxDate" />
         <van-time-picker v-model="tempStartTime" :columns-type="['hour', 'minute']"
-                         :min-hour="startTimeHourFilter.minHour" :max-hour="startTimeHourFilter.maxHour"
-                         :min-time="startTimeLimit.minTime" :max-time="startTimeLimit.maxTime"/>
+          :min-hour="startTimeHourFilter.minHour" :max-hour="startTimeHourFilter.maxHour"
+          :min-time="startTimeLimit.minTime" :max-time="startTimeLimit.maxTime" />
       </van-picker-group>
       <div class="picker-clear-btn">
         <van-button size="small" @click="clearStartTime">清空</van-button>
@@ -1026,11 +1026,10 @@ const handleSubmit = async () => {
     <!-- 结束时间选择器（步骤式：先选日期，点下一步选时间） -->
     <van-popup v-model:show="showEndTimePicker" position="bottom" round>
       <van-picker-group title="选择结束时间" :tabs="dateTimeTabs" next-step-text="下一步" @confirm="onEndTimeConfirm"
-                        @cancel="showEndTimePicker = false">
-        <van-date-picker v-model="tempEndDate" :min-date="minDate" :max-date="maxDate"/>
-        <van-time-picker v-model="tempEndTime" :columns-type="['hour', 'minute']"
-                         :min-hour="endTimeHourFilter.minHour" :max-hour="endTimeHourFilter.maxHour"
-                         :min-time="endTimeLimit.minTime" :max-time="endTimeLimit.maxTime"/>
+        @cancel="showEndTimePicker = false">
+        <van-date-picker v-model="tempEndDate" :min-date="minDate" :max-date="maxDate" />
+        <van-time-picker v-model="tempEndTime" :columns-type="['hour', 'minute']" :min-hour="endTimeHourFilter.minHour"
+          :max-hour="endTimeHourFilter.maxHour" :min-time="endTimeLimit.minTime" :max-time="endTimeLimit.maxTime" />
       </van-picker-group>
       <div class="picker-clear-btn">
         <van-button size="small" @click="clearEndTime">清空</van-button>
@@ -1040,9 +1039,9 @@ const handleSubmit = async () => {
     <!-- 加工设备选择器 -->
     <van-popup v-model:show="showDevicePicker" position="bottom" round>
       <div class="picker-search">
-        <van-search v-model="deviceKeyword" placeholder="输入设备关键词" shape="round" clearable/>
+        <van-search v-model="deviceKeyword" placeholder="输入设备关键词" shape="round" clearable />
       </div>
-      <van-picker :columns="filteredDeviceOptions" @confirm="onDeviceConfirm" @cancel="showDevicePicker = false"/>
+      <van-picker :columns="filteredDeviceOptions" @confirm="onDeviceConfirm" @cancel="showDevicePicker = false" />
       <div class="picker-clear-btn">
         <van-button size="small" @click="clearDevice">清空</van-button>
       </div>

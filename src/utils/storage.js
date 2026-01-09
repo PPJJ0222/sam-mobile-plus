@@ -7,18 +7,18 @@
  */
 
 // Token 存储的 key
-const TOKEN_KEY = 'token'
+const TOKEN_KEY = "token";
 // 记住密码相关的 key
-const USERNAME_KEY = 'username'
-const PASSWORD_KEY = 'password'
-const REMEMBER_KEY = 'rememberMe'
+const USERNAME_KEY = "username";
+const PASSWORD_KEY = "password";
+const REMEMBER_KEY = "rememberMe";
 
 /**
  * 获取 Token
  * @returns {string|null} token 值
  */
 export function getToken() {
-  return localStorage.getItem(TOKEN_KEY)
+  return localStorage.getItem(TOKEN_KEY);
 }
 
 /**
@@ -26,14 +26,14 @@ export function getToken() {
  * @param {string} token - token 值
  */
 export function setToken(token) {
-  localStorage.setItem(TOKEN_KEY, token)
+  localStorage.setItem(TOKEN_KEY, token);
 }
 
 /**
  * 移除 Token
  */
 export function removeToken() {
-  localStorage.removeItem(TOKEN_KEY)
+  localStorage.removeItem(TOKEN_KEY);
 }
 
 /**
@@ -42,10 +42,10 @@ export function removeToken() {
  */
 export function getRememberedLogin() {
   return {
-    username: localStorage.getItem(USERNAME_KEY) || '',
-    password: localStorage.getItem(PASSWORD_KEY) || '',
-    rememberMe: localStorage.getItem(REMEMBER_KEY) === 'true'
-  }
+    username: localStorage.getItem(USERNAME_KEY) || "",
+    password: localStorage.getItem(PASSWORD_KEY) || "",
+    rememberMe: localStorage.getItem(REMEMBER_KEY) === "true",
+  };
 }
 
 /**
@@ -54,24 +54,24 @@ export function getRememberedLogin() {
  * @param {string} encryptedPassword - 加密后的密码
  */
 export function saveRememberedLogin(username, encryptedPassword) {
-  localStorage.setItem(USERNAME_KEY, username)
-  localStorage.setItem(PASSWORD_KEY, encryptedPassword)
-  localStorage.setItem(REMEMBER_KEY, 'true')
+  localStorage.setItem(USERNAME_KEY, username);
+  localStorage.setItem(PASSWORD_KEY, encryptedPassword);
+  localStorage.setItem(REMEMBER_KEY, "true");
 }
 
 /**
  * 清除记住的登录信息
  */
 export function clearRememberedLogin() {
-  localStorage.removeItem(USERNAME_KEY)
-  localStorage.removeItem(PASSWORD_KEY)
-  localStorage.removeItem(REMEMBER_KEY)
+  localStorage.removeItem(USERNAME_KEY);
+  localStorage.removeItem(PASSWORD_KEY);
+  localStorage.removeItem(REMEMBER_KEY);
 }
 
 /**
  * 清除所有存储（退出登录时使用）
  */
 export function clearAll() {
-  removeToken()
-  clearRememberedLogin()
+  removeToken();
+  clearRememberedLogin();
 }

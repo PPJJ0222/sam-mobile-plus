@@ -135,11 +135,7 @@ const messageList = ref([
         采用 Vant Icon 组件配合 flex 布局，手机端四列均分，方便拇指点击
       -->
       <div class="feature-grid">
-        <div
-          v-for="action in quickActions"
-          :key="action.id"
-          class="feature-card"
-        >
+        <div v-for="action in quickActions" :key="action.id" class="feature-card">
           <van-icon :name="action.icon" :color="action.color" size="26" />
           <div class="feature-name">{{ action.name }}</div>
           <div class="feature-desc">{{ action.desc }}</div>
@@ -162,14 +158,8 @@ const messageList = ref([
         - label: 标题下方的描述
       -->
       <van-cell-group inset>
-        <van-cell
-          v-for="msg in messageList"
-          :key="msg.id"
-          :title="msg.title"
-          :value="msg.time"
-          :label="msg.content"
-          is-link
-        />
+        <van-cell v-for="msg in messageList" :key="msg.id" :title="msg.title" :value="msg.time" :label="msg.content"
+          is-link />
       </van-cell-group>
     </section>
   </div>

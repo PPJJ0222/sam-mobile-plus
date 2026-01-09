@@ -18,69 +18,69 @@ export function compressImage(file, maxSize = 5 * 1024 * 1024, quality = 0.7) {
   return new Promise((resolve, reject) => {
     // 如果文件已经小于限制，直接返回
     if (file.size <= maxSize) {
-      resolve(file)
-      return
+      resolve(file);
+      return;
     }
 
     // 创建 FileReader 读取图片
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
 
     reader.onload = (e) => {
-      const img = new Image()
-      img.src = e.target.result
+      const img = new Image();
+      img.src = e.target.result;
 
       img.onload = () => {
         // 创建 Canvas 进行压缩
-        const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
         // 保持原始尺寸
-        canvas.width = img.width
-        canvas.height = img.height
+        canvas.width = img.width;
+        canvas.height = img.height;
 
         // 绘制图片到 Canvas
-        ctx.drawImage(img, 0, 0)
+        ctx.drawImage(img, 0, 0);
 
         // 尝试不同质量级别压缩
-        let currentQuality = quality
-        let compressedBlob = null
+        let currentQuality = quality;
+        let compressedBlob = null;
 
         const tryCompress = () => {
           canvas.toBlob(
             (blob) => {
               if (blob.size <= maxSize || currentQuality <= 0.1) {
                 // 压缩成功或已达到最低质量
-                compressedBlob = blob
+                compressedBlob = blob;
                 // 将 Blob 转换为 File
                 const compressedFile = new File([blob], file.name, {
-                  type: 'image/jpeg',
-                  lastModified: Date.now()
-                })
-                resolve(compressedFile)
+                  type: "image/jpeg",
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
               } else {
                 // 继续降低质量
-                currentQuality -= 0.1
-                tryCompress()
+                currentQuality -= 0.1;
+                tryCompress();
               }
             },
-            'image/jpeg',
+            "image/jpeg",
             currentQuality
-          )
-        }
+          );
+        };
 
-        tryCompress()
-      }
+        tryCompress();
+      };
 
       img.onerror = () => {
-        reject(new Error('图片加载失败'))
-      }
-    }
+        reject(new Error("图片加载失败"));
+      };
+    };
 
     reader.onerror = () => {
-      reject(new Error('文件读取失败'))
-    }
-  })
+      reject(new Error("文件读取失败"));
+    };
+  });
 }
 
 /**
@@ -96,21 +96,21 @@ export function compressImage(file, maxSize = 5 * 1024 * 1024, quality = 0.7) {
 export async function processImage(file, maxSize = 5 * 1024 * 1024) {
   // 文件大小在限制内，直接返回
   if (file.size <= maxSize) {
-    return { file, compressed: false, tooLarge: false }
+    return { file, compressed: false, tooLarge: false };
   }
 
   // 尝试压缩
   try {
-    const compressedFile = await compressImage(file, maxSize)
+    const compressedFile = await compressImage(file, maxSize);
 
     // 检查压缩后是否仍然超过限制
     if (compressedFile.size > maxSize) {
-      return { file: compressedFile, compressed: true, tooLarge: true }
+      return { file: compressedFile, compressed: true, tooLarge: true };
     }
 
-    return { file: compressedFile, compressed: true, tooLarge: false }
+    return { file: compressedFile, compressed: true, tooLarge: false };
   } catch (error) {
-    console.error('图片压缩失败:', error)
-    return { file, compressed: false, tooLarge: true }
+    console.error("图片压缩失败:", error);
+    return { file, compressed: false, tooLarge: true };
   }
 }

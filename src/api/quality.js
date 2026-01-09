@@ -5,7 +5,7 @@
  * 封装质量快反模块的所有后端接口调用
  * 目前为预留接口，返回模拟数据，后续替换为真实接口
  */
-import request from './request'
+import request from "./request";
 
 /**
  * 生成异常单号
@@ -19,8 +19,9 @@ export function generateOrderNo() {
 
   // 模拟数据：生成格式为 YC + 年月日 + 4位序号
   return Promise.resolve({
-    orderNo: 'YC' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '0001'
-  })
+    orderNo:
+      "YC" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + "0001",
+  });
 }
 
 /**
@@ -34,11 +35,11 @@ export function getMoldList() {
   // return request.get('/quality/moldList')
 
   return Promise.resolve([
-    { value: 'M001', text: 'M001-前保险杠' },
-    { value: 'M002', text: 'M002-后保险杠' },
-    { value: 'M003', text: 'M003-车门内板' },
-    { value: 'M004', text: 'M004-发动机罩' }
-  ])
+    { value: "M001", text: "M001-前保险杠" },
+    { value: "M002", text: "M002-后保险杠" },
+    { value: "M003", text: "M003-车门内板" },
+    { value: "M004", text: "M004-发动机罩" },
+  ]);
 }
 
 /**
@@ -52,12 +53,12 @@ export function getReasonList() {
   // return request.get('/quality/reasonList')
 
   return Promise.resolve([
-    { value: 'R001', text: '尺寸超差' },
-    { value: 'R002', text: '外观缺陷' },
-    { value: 'R003', text: '材料问题' },
-    { value: 'R004', text: '设备故障' },
-    { value: 'R005', text: '工艺问题' }
-  ])
+    { value: "R001", text: "尺寸超差" },
+    { value: "R002", text: "外观缺陷" },
+    { value: "R003", text: "材料问题" },
+    { value: "R004", text: "设备故障" },
+    { value: "R005", text: "工艺问题" },
+  ]);
 }
 
 /**
@@ -71,12 +72,12 @@ export function getDeptList() {
   // return request.get('/quality/deptList')
 
   return Promise.resolve([
-    { value: 'D001', text: '生产部' },
-    { value: 'D002', text: '质量部' },
-    { value: 'D003', text: '技术部' },
-    { value: 'D004', text: '设备部' },
-    { value: 'D005', text: '采购部' }
-  ])
+    { value: "D001", text: "生产部" },
+    { value: "D002", text: "质量部" },
+    { value: "D003", text: "技术部" },
+    { value: "D004", text: "设备部" },
+    { value: "D005", text: "采购部" },
+  ]);
 }
 
 /**
@@ -90,10 +91,10 @@ export function getUserInfo() {
   // return request.get('/user/info')
 
   return Promise.resolve({
-    deptId: 'D002',
-    deptName: '质量部',
-    userName: '张三'
-  })
+    deptId: "D002",
+    deptName: "质量部",
+    userName: "张三",
+  });
 }
 
 /**
@@ -115,10 +116,10 @@ export function uploadImage(file) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        url: 'https://placeholder.com/image_' + Date.now() + '.jpg'
-      })
-    }, 500)
-  })
+        url: "https://placeholder.com/image_" + Date.now() + ".jpg",
+      });
+    }, 500);
+  });
 }
 
 /**
@@ -141,11 +142,11 @@ export function submitQualityForm(data) {
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log('提交的表单数据:', data)
+      console.log("提交的表单数据:", data);
       resolve({
         success: true,
-        message: '提交成功'
-      })
-    }, 1000)
-  })
+        message: "提交成功",
+      });
+    }, 1000);
+  });
 }

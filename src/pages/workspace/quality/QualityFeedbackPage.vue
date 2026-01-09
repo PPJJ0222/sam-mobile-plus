@@ -16,9 +16,9 @@
   - 补救措施：非必填，文本框，最多500字
 -->
 <script setup>
-import {ref, onMounted, computed} from "vue";
-import {useRouter} from "vue-router";
-import {showToast, showConfirmDialog} from "vant";
+import { ref, onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
+import { showToast, showConfirmDialog } from "vant";
 import {
   generateOrderNo,
   getMoldList,
@@ -28,7 +28,7 @@ import {
   uploadImage,
   submitQualityForm,
 } from "@/api/quality";
-import {processImage} from "@/utils/imageCompress";
+import { processImage } from "@/utils/imageCompress";
 
 /**
  * 【useRouter 解释】
@@ -103,8 +103,8 @@ const filteredMoldOptions = computed(() => {
   const keyword = moldKeyword.value.trim();
   if (!keyword) return moldOptions.value;
   return moldOptions.value.filter(
-      (item) =>
-          item.text.includes(keyword) || String(item.value).includes(keyword)
+    (item) =>
+      item.text.includes(keyword) || String(item.value).includes(keyword)
   );
 });
 
@@ -115,8 +115,8 @@ const filteredReasonOptions = computed(() => {
   const keyword = reasonKeyword.value.trim();
   if (!keyword) return reasonOptions.value;
   return reasonOptions.value.filter(
-      (item) =>
-          item.text.includes(keyword) || String(item.value).includes(keyword)
+    (item) =>
+      item.text.includes(keyword) || String(item.value).includes(keyword)
   );
 });
 
@@ -127,8 +127,8 @@ const filteredDeptOptions = computed(() => {
   const keyword = deptKeyword.value.trim();
   if (!keyword) return deptOptions.value;
   return deptOptions.value.filter(
-      (item) =>
-          item.text.includes(keyword) || String(item.value).includes(keyword)
+    (item) =>
+      item.text.includes(keyword) || String(item.value).includes(keyword)
   );
 });
 
@@ -181,7 +181,7 @@ onMounted(async () => {
  * @param {Object} param0 - Picker 回调参数
  * @param {Array} param0.selectedOptions - 选中的选项数组
  */
-const onMoldConfirm = ({selectedOptions}) => {
+const onMoldConfirm = ({ selectedOptions }) => {
   const selected = selectedOptions[0];
   moldNo.value = selected.value;
   moldText.value = selected.text;
@@ -191,7 +191,7 @@ const onMoldConfirm = ({selectedOptions}) => {
 /**
  * 异常原因选择确认
  */
-const onReasonConfirm = ({selectedOptions}) => {
+const onReasonConfirm = ({ selectedOptions }) => {
   const selected = selectedOptions[0];
   reason.value = selected.value;
   reasonText.value = selected.text;
@@ -201,7 +201,7 @@ const onReasonConfirm = ({selectedOptions}) => {
 /**
  * 责任部门选择确认
  */
-const onDeptConfirm = ({selectedOptions}) => {
+const onDeptConfirm = ({ selectedOptions }) => {
   const selected = selectedOptions[0];
   deptId.value = selected.value;
   deptText.value = selected.text;
@@ -302,8 +302,8 @@ const handleSubmit = async () => {
 
     // 收集图片URL
     const imageUrls = imageList.value
-        .filter((item) => item.status === "done")
-        .map((item) => item.url);
+      .filter((item) => item.status === "done")
+      .map((item) => item.url);
 
     // 构造提交数据
     const formData = {
@@ -353,13 +353,7 @@ const handleSubmit = async () => {
           readonly: 只读，不可编辑
           数据由后台生成，用户无法修改
         -->
-        <van-field
-            v-model="orderNo"
-            label="异常单号"
-            placeholder="自动生成"
-            readonly
-            required
-        />
+        <van-field v-model="orderNo" label="异常单号" placeholder="自动生成" readonly required />
 
         <!--
           模具号选择器
@@ -367,45 +361,21 @@ const handleSubmit = async () => {
           readonly: 禁止手动输入，只能通过选择器选择
           @click: 点击时打开选择器弹窗
         -->
-        <van-field
-            v-model="moldText"
-            label="模具号"
-            placeholder="请选择模具号"
-            is-link
-            readonly
-            required
-            :rules="[{ required: true, message: '请选择模具号' }]"
-            @click="showMoldPicker = true"
-        />
+        <van-field v-model="moldText" label="模具号" placeholder="请选择模具号" is-link readonly required
+          :rules="[{ required: true, message: '请选择模具号' }]" @click="showMoldPicker = true" />
 
         <!--
           异常原因选择器
         -->
-        <van-field
-            v-model="reasonText"
-            label="异常原因"
-            placeholder="请选择异常原因"
-            is-link
-            readonly
-            required
-            :rules="[{ required: true, message: '请选择异常原因' }]"
-            @click="showReasonPicker = true"
-        />
+        <van-field v-model="reasonText" label="异常原因" placeholder="请选择异常原因" is-link readonly required
+          :rules="[{ required: true, message: '请选择异常原因' }]" @click="showReasonPicker = true" />
 
         <!--
           责任部门选择器
           默认值为登录人所在部门
         -->
-        <van-field
-            v-model="deptText"
-            label="责任部门"
-            placeholder="请选择责任部门"
-            is-link
-            readonly
-            required
-            :rules="[{ required: true, message: '请选择责任部门' }]"
-            @click="showDeptPicker = true"
-        />
+        <van-field v-model="deptText" label="责任部门" placeholder="请选择责任部门" is-link readonly required
+          :rules="[{ required: true, message: '请选择责任部门' }]" @click="showDeptPicker = true" />
 
         <!--
           是否技术支持
@@ -435,17 +405,9 @@ const handleSubmit = async () => {
           show-word-limit: 显示字数统计
           autosize: 自动调整高度
         -->
-        <van-field
-            v-model="description"
-            label="问题描述"
-            type="textarea"
-            placeholder="请描述问题详情"
-            required
-            :rules="[{ required: true, message: '请填写问题描述' }]"
-            maxlength="500"
-            show-word-limit
-            :autosize="{ minHeight: 80 }"
-        />
+        <van-field v-model="description" label="问题描述" type="textarea" placeholder="请描述问题详情" required
+          :rules="[{ required: true, message: '请填写问题描述' }]" maxlength="500" show-word-limit
+          :autosize="{ minHeight: 80 }" />
 
         <!--
           描述图片
@@ -459,13 +421,8 @@ const handleSubmit = async () => {
         -->
         <van-field label="描述图片">
           <template #input>
-            <van-uploader
-                v-model="imageList"
-                multiple
-                :before-read="beforeRead"
-                :after-read="afterRead"
-                accept="image/*"
-            />
+            <van-uploader v-model="imageList" multiple :before-read="beforeRead" :after-read="afterRead"
+              accept="image/*" />
           </template>
         </van-field>
       </van-cell-group>
@@ -475,15 +432,8 @@ const handleSubmit = async () => {
         非必填字段
       -->
       <van-cell-group inset class="form-card">
-        <van-field
-            v-model="remedy"
-            label="补救措施"
-            type="textarea"
-            placeholder="请填写补救措施（选填）"
-            maxlength="500"
-            show-word-limit
-            :autosize="{ minHeight: 80 }"
-        />
+        <van-field v-model="remedy" label="补救措施" type="textarea" placeholder="请填写补救措施（选填）" maxlength="500"
+          show-word-limit :autosize="{ minHeight: 80 }" />
       </van-cell-group>
 
       <!--
@@ -508,18 +458,9 @@ const handleSubmit = async () => {
       -->
     <van-popup v-model:show="showMoldPicker" position="bottom" round>
       <div class="picker-search">
-        <van-search
-            v-model="moldKeyword"
-            placeholder="输入模具号关键词"
-            shape="round"
-            clearable
-        />
+        <van-search v-model="moldKeyword" placeholder="输入模具号关键词" shape="round" clearable />
       </div>
-      <van-picker
-          :columns="filteredMoldOptions"
-          @confirm="onMoldConfirm"
-          @cancel="showMoldPicker = false"
-      />
+      <van-picker :columns="filteredMoldOptions" @confirm="onMoldConfirm" @cancel="showMoldPicker = false" />
     </van-popup>
 
     <!--
@@ -527,18 +468,9 @@ const handleSubmit = async () => {
       -->
     <van-popup v-model:show="showReasonPicker" position="bottom" round>
       <div class="picker-search">
-        <van-search
-            v-model="reasonKeyword"
-            placeholder="输入异常原因关键词"
-            shape="round"
-            clearable
-        />
+        <van-search v-model="reasonKeyword" placeholder="输入异常原因关键词" shape="round" clearable />
       </div>
-      <van-picker
-          :columns="filteredReasonOptions"
-          @confirm="onReasonConfirm"
-          @cancel="showReasonPicker = false"
-      />
+      <van-picker :columns="filteredReasonOptions" @confirm="onReasonConfirm" @cancel="showReasonPicker = false" />
     </van-popup>
 
     <!--
@@ -546,18 +478,9 @@ const handleSubmit = async () => {
       -->
     <van-popup v-model:show="showDeptPicker" position="bottom" round>
       <div class="picker-search">
-        <van-search
-            v-model="deptKeyword"
-            placeholder="输入部门关键词"
-            shape="round"
-            clearable
-        />
+        <van-search v-model="deptKeyword" placeholder="输入部门关键词" shape="round" clearable />
       </div>
-      <van-picker
-          :columns="filteredDeptOptions"
-          @confirm="onDeptConfirm"
-          @cancel="showDeptPicker = false"
-      />
+      <van-picker :columns="filteredDeptOptions" @confirm="onDeptConfirm" @cancel="showDeptPicker = false" />
     </van-popup>
   </div>
 </template>

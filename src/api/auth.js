@@ -5,7 +5,7 @@
  * 封装与用户认证相关的后端接口调用
  * 包括：登录、获取用户信息、退出登录
  */
-import request from './request'
+import request from "./request";
 
 /**
  * 移动端登录接口
@@ -20,10 +20,10 @@ import request from './request'
  */
 export function loginMobile(username, password) {
   return request({
-    url: '/loginMobile',
-    method: 'post',
-    data: { username, password }
-  })
+    url: "/loginMobile",
+    method: "post",
+    data: { username, password },
+  });
 }
 
 /**
@@ -36,9 +36,9 @@ export function loginMobile(username, password) {
  */
 export function getInfo() {
   return request({
-    url: '/getInfo',
-    method: 'get'
-  })
+    url: "/getInfo",
+    method: "get",
+  });
 }
 
 /**
@@ -50,7 +50,7 @@ export function getInfo() {
  */
 export function logout() {
   return request({
-    url: '/logout',
-    method: 'post'
-  })
+    url: "/logout",
+    method: "post",
+  });
 }

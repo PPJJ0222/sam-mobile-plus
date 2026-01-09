@@ -130,30 +130,15 @@ const onWorkhourSelect = (action) => {
         遍历 menuItems 数组，为每个菜单项生成一个独立的卡片
         :key 是唯一标识，帮助 Vue 高效更新 DOM
       -->
-      <van-cell-group
-        v-for="item in menuItems"
-        :key="item.id"
-        inset
-        class="form-card"
-      >
-        <van-cell
-          :title="item.name"
-          :label="item.desc"
-          is-link
-          @click="handleMenuClick(item)"
-        >
+      <van-cell-group v-for="item in menuItems" :key="item.id" inset class="form-card">
+        <van-cell :title="item.name" :label="item.desc" is-link @click="handleMenuClick(item)">
           <!--
             【#icon 解释】Vue 的具名插槽语法
             van-cell 组件提供 icon 插槽，用于自定义左侧图标
             这里使用 van-icon 组件，可以设置图标颜色
           -->
           <template #icon>
-            <van-icon
-              :name="item.icon"
-              :color="item.color"
-              size="24"
-              class="menu-icon"
-            />
+            <van-icon :name="item.icon" :color="item.color" size="24" class="menu-icon" />
           </template>
         </van-cell>
       </van-cell-group>
@@ -171,14 +156,8 @@ const onWorkhourSelect = (action) => {
     <van-popup v-model:show="showWorkhourSheet" position="bottom" round>
       <div class="popup-header">选择工时类型</div>
       <van-grid :column-num="3" :border="false" class="workhour-grid">
-        <van-grid-item
-          v-for="action in workhourActions"
-          :key="action.id"
-          :icon="action.icon"
-          :icon-color="action.color"
-          :text="action.name"
-          @click="onWorkhourSelect(action)"
-        />
+        <van-grid-item v-for="action in workhourActions" :key="action.id" :icon="action.icon" :icon-color="action.color"
+          :text="action.name" @click="onWorkhourSelect(action)" />
       </van-grid>
       <div class="popup-cancel" @click="showWorkhourSheet = false">取消</div>
     </van-popup>
